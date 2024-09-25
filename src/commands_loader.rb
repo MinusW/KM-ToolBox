@@ -8,8 +8,8 @@ class CommandsLoader
   end
 
   def register_commands
-    PingCommand.new(@bot)
+    Command::Message.new(@bot)
     Command::Info.new(@bot)
-    FormCommand.new(@bot)
+    Command::Message.new(@bot)
   end
 end

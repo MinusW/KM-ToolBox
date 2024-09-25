@@ -2,7 +2,7 @@
 require_relative '../utils/form_builder'
 
 module Command
-  class FormCommand
+  class Form
     include Discordrb::Commands::CommandContainer
 
     def initialize

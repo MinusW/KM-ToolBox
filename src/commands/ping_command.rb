@@ -1,7 +1,7 @@
 require_relative '../messages/embed_template'
 
 module Command
-  class PingCommand
+  class Ping
     include Discordrb::Commands::CommandContainer
 
     def initialize

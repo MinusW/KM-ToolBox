@@ -8,8 +8,8 @@ class EventsLoader
   end
 
   def register_events
-    MessageEvent.new(@bot).register
-    ReadyEvent.new(@bot).register
-    InteractionEvent.new(@bot).register # Register the interaction events
+    Event::Message.new(@bot).register
+    Event::Ready.new(@bot).register
+    Event::Interaction.new(@bot).register
   end
 end
