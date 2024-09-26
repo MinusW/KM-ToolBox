@@ -1,4 +1,4 @@
-module Event
+module Events
   class Ready
     def initialize(bot)
       @bot = bot

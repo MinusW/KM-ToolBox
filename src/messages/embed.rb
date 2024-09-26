@@ -1,7 +1,6 @@
-# messages/embed_template.rb
 require 'discordrb'
 
-module Message
+module Messages
   class Embed
     def self.build(title, description, color = '#3498db')
       Discordrb::Webhooks::Embed.new(

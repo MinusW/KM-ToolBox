@@ -1,4 +1,4 @@
-module Middleware  
+module Middleware
   class PermissionChecker
     def initialize(bot)
       @bot = bot

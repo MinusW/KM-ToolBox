@@ -1,6 +1,6 @@
-require_relative '../messages/embed_template'
+require_relative '../messages/embed'
 
-module Command
+module Commands
   class Ping
     include Discordrb::Commands::CommandContainer
 

@@ -1,6 +1,6 @@
-﻿require_relative './events/message_event'
-require_relative './events/ready_event'
-require_relative './events/interaction_event'
+﻿require_relative './events/message'
+require_relative './events/ready'
+require_relative './events/interaction'
 
 class EventsLoader
   def initialize(bot)
@@ -8,8 +8,8 @@ class EventsLoader
   end
 
   def register_events
-    Event::Message.new(@bot).register
-    Event::Ready.new(@bot).register
-    Event::Interaction.new(@bot).register
+    Events::Message.new(@bot).register
+    Events::Ready.new(@bot).register
+    Events::Interaction.new(@bot).register
   end
 end

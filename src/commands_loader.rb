@@ -1,6 +1,6 @@
-﻿require_relative './commands/ping_command'
-require_relative './commands/info_command'
-require_relative './commands/form_command'
+﻿require_relative './commands/ping'
+require_relative './commands/info'
+require_relative './commands/form'
 
 class CommandsLoader
   def initialize(bot)
@@ -8,8 +8,8 @@ class CommandsLoader
   end
 
   def register_commands
-    Command::Message.new(@bot)
-    Command::Info.new(@bot)
-    Command::Message.new(@bot)
+    Commands::Message.new(@bot)
+    Commands::Info.new(@bot)
+    Commands::Message.new(@bot)
   end
 end

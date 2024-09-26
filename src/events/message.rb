@@ -1,4 +1,4 @@
-module Event  
+module Events
   class Message
     def initialize(bot)
       @bot = bot

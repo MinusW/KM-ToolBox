@@ -1,4 +1,4 @@
-module Event
+module Events
   class Interaction
     def initialize(bot)
       @bot = bot

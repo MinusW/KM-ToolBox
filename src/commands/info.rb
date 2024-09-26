@@ -1,6 +1,6 @@
-require_relative '../messages/simple_message'
+require_relative '../messages/simple'
 
-module Command
+module Commands
   class Info
     include Discordrb::Commands::CommandContainer
 

@@ -1,7 +1,6 @@
-# commands/form_command.rb
 require_relative '../utils/form_builder'
 
-module Command
+module Commands
   class Form
     include Discordrb::Commands::CommandContainer
 
