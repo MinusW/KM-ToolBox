@@ -145,7 +145,7 @@ docs: updated documentation
 
 ## **License**
 
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
+This project is licensed under the MIT License. See the [`LICENSE`](https://github.com/MinusW/KM-ToolBox/blob/main/LICENSE) file for more details.
 
 ---
 
