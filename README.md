@@ -49,6 +49,7 @@ A Ruby-based Discord bot, **KM ToolBox**, designed for *Kingdom Maker* players. 
   - `/group delete` – Delete the current group channel.
   - `/group add [Person]` – Add a new member to the group.
   - `/group kick [Person]` – Remove a member from the group.
+  - `/group leave` – Leave the group.
 
 ### **/clear [number/all]**
 - **Description**: Delete a specified number of messages or all messages in a private chat.
@@ -62,7 +63,7 @@ A Ruby-based Discord bot, **KM ToolBox**, designed for *Kingdom Maker* players. 
 - **Description**: Calculate the cost to upgrade the temple from one level to another. Defaults to levels 0 and 50 if not specified.
 - **Usage**: `/temple [startLevel?] [endLevel?]`
 
-### **/noblecost [type] [startLevel?] [endLevel?]**
+### **/noblecost [role] [startLevel?] [endLevel?]**
 - **Description**: Calculate the cost to upgrade a noble from one level to another. Defaults to levels 1 and 110 if not specified.
 - **Usage**: `/noblecost [type] [startLevel?] [endLevel?]`
 
@@ -131,7 +132,7 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0
   - `style`: Code formatting changes (no logic changes).
   - `refactor`: Code restructuring without changing behavior.
   - `test`: Adding or fixing tests.
-  - `chore`: Any unwanted task
+  - `chore`: Any unwanted task.
 
 **Example**:
 ```
