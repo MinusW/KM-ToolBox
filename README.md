@@ -56,7 +56,7 @@ A Ruby-based Discord bot, **KM ToolBox**, designed for *Kingdom Maker* players. 
 - **Usage**: `/clear [number/all]`
 
 ### **/buildcost [building] [startLevel?] [endLevel?]**
-- **Description**: Calculate the cost to upgrade a building from one level to another. Defaults to levels 1 and 40 if not specified.
+- **Description**: Calculate the cost to upgrade a building from one level to another. Defaults to levels 1 and 40 if not specified. Building field defaults to all if not specified.
 - **Usage**: `/buildcost [building] [startLevel?] [endLevel?]`
 
 ### **/temple [startLevel?] [endLevel?]**
@@ -66,6 +66,14 @@ A Ruby-based Discord bot, **KM ToolBox**, designed for *Kingdom Maker* players. 
 ### **/noblecost [role] [startLevel?] [endLevel?]**
 - **Description**: Calculate the cost to upgrade a noble from one level to another. Defaults to levels 1 and 110 if not specified.
 - **Usage**: `/noblecost [type] [startLevel?] [endLevel?]`
+
+### **/trait [trait name]**
+- **Description**: Displays the stats for each level of a given trait and provides an opinion on the trait's usefulness.
+- **Usage**: `/trait [trait name]`
+
+### **/TOTD [tip]**
+- **Description**: Submit a Tip of the Day (TOTD) for review by the staff. If approved, the tip will be shown to the community.
+- **Usage**: `/TOTD [tip]`
 
 ### **/report [type] [message]**
 - **Description**: Report a bug or suggest a feature.
