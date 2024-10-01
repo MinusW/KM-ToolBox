@@ -55,7 +55,7 @@ A Ruby-based Discord bot, **KM ToolBox**, designed for *Kingdom Maker* players. 
 - **Description**: Delete a specified number of messages or all messages in a private chat.
 - **Usage**: `/clear [number/all]`
 
-### **/buildcost [building] [startLevel?] [endLevel?]**
+### **/buildcost [buildings] [startLevel?] [endLevel?]**
 - **Description**: Calculate the cost to upgrade a building from one level to another. Defaults to levels 1 and 40 if not specified. Building field defaults to all if not specified.
 - **Usage**: `/buildcost [building] [startLevel?] [endLevel?]`
 
