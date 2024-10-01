@@ -38,9 +38,9 @@ A Ruby-based Discord bot, **KM ToolBox**, designed for *Kingdom Maker* players. 
 - **Description**: Report a Kingdom Maker server refresh (store or refinery). If 5 users report the refresh, the bot announces it to the server.
 - **Usage**: `/serverrefresh`
 
-### **/noble [role] [baby/mature]**
-- **Description**: Evaluate a noble's talent and potential. If no age (`baby/mature`) is provided, it defaults to mature.
-- **Usage**: `/noble [role] [baby/mature]`
+### **/noble [role] [level?]**
+- **Description**: Evaluate a noble's talent and potential. If no level is provided, it defaults to 1.
+- **Usage**: `/noble [role] [level?]`
 
 ### **/group {action} [groupName?] [People?]**
 - **Description**: Manage group channels. Available actions are: `{create}`, `{delete}`, `{add}`, and `{kick}`.
