@@ -38,9 +38,13 @@ A Ruby-based Discord bot, **KM ToolBox**, designed for *Kingdom Maker* players. 
 - **Description**: Report a Kingdom Maker server refresh (store or refinery). If 5 users report the refresh, the bot announces it to the server.
 - **Usage**: `/serverrefresh`
 
-### **/noble [role] [level?]**
-- **Description**: Evaluate a noble's talent and potential. If no level is provided, it defaults to 1.
-- **Usage**: `/noble [role] [level?]`
+### **/noble {action} [role] [level/startLevel?] [endLevel?]**
+- **Description**: Manage noble talents and cost evaluations. Available actions are: `{talent}`, `{cost}`.
+  - `{talent}`: Evaluate a noble's talent and potential at a specific level. Defaults to level 1 if no level is provided.
+  - `{cost}`: Calculate the cost to upgrade a noble from one level to another. Defaults to levels 1 and 110 if not specified.
+- **Usage**:
+  - `/noble talent [role] [level?]` – Evaluate the noble's talent at the given level (defaults to level 1).
+  - `/noble cost [role] [startLevel?] [endLevel?]` – Calculate the cost to upgrade a noble from one level to another (defaults to 1 and 110).
 
 ### **/group {action} [groupName?] [People?]**
 - **Description**: Manage group channels. Available actions are: `{create}`, `{delete}`, `{add}`, and `{kick}`.
@@ -62,10 +66,6 @@ A Ruby-based Discord bot, **KM ToolBox**, designed for *Kingdom Maker* players. 
 ### **/temple [startLevel?] [endLevel?]**
 - **Description**: Calculate the cost to upgrade the temple from one level to another. Defaults to levels 0 and 50 if not specified.
 - **Usage**: `/temple [startLevel?] [endLevel?]`
-
-### **/noblecost [role] [startLevel?] [endLevel?]**
-- **Description**: Calculate the cost to upgrade a noble from one level to another. Defaults to levels 1 and 110 if not specified.
-- **Usage**: `/noblecost [type] [startLevel?] [endLevel?]`
 
 ### **/trait [trait name]**
 - **Description**: Displays the stats for each level of a given trait and provides an opinion on the trait's usefulness.
