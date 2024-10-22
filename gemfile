@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+
+gem 'ruby-lsp'
+gem 'rubocop', require: false
+gem 'discordrb', github: 'shardlab/discordrb', branch: 'main'
