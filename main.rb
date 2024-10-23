@@ -217,7 +217,16 @@ bot.application_command(:temple) do |event|
   start_level = (event.options['start_level'] || 0).to_i
   end_level = (event.options['end_level'] || 50).to_i
   cost = Temple.cost(start_level, end_level)
-  event.send_message(content: "Cost from level #{start_level} to level #{end_level} is:\n #{cost[0]} bricks\n #{cost[1]} blocks\n #{cost[2]} slabs", ephemeral: false)
+  event.edit_response do |builder|
+    builder.add_embed do |embed|
+      embed.title = 'Temple'
+      embed.description = "Cost from level #{start_level} to level #{end_level} is:"
+      embed.color = 0x00ff00
+      embed.add_field(name: 'Bricks', value: cost[0].to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1\'').reverse, inline: false)
+      embed.add_field(name: 'Blocks', value: cost[1].to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1\'').reverse, inline: false)
+      embed.add_field(name: 'Slabs', value: cost[2].to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1\'').reverse, inline: false)
+    end
+  end
 end
 
 bot.application_command(:buildcost) do |event|
