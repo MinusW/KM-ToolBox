@@ -24,7 +24,8 @@ class Noble
   end
 
   def potential_traits
-    (Defaults.instance.traits - @traits).sort_by do |trait|
+    impossible_traits = ["Inbred", "Bastard"]
+    (Defaults.instance.traits.filter {|trait| trait.type == @type && trait.score(self).positive? && !impossible_traits.include?(trait.name)} - @traits).sort_by do |trait|
       [-trait.score(self), trait.name]
     end.first(max_innate_count - innates_trait_count)
   end
