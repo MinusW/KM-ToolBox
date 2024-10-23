@@ -274,10 +274,9 @@ bot.application_command(:serverrefresh) do |event|
   Defaults.instance.refresh_logs.add_log(event.user.id, event.channel.id)
   if Defaults.instance.refresh_logs.refresh?
     Defaults.instance.refresh_logs.clear_logs
-    
     channel = bot.channel(ENV['ANNOUNCEMENT_CHANNEL_ID'].to_i)
-    bot.send_message(channel, "Refinery has been refreshed!")
-    event.send_message(content: "Everyone has been notified.")
+    bot.send_message(channel, 'Refinery has been refreshed!')
+    event.send_message(content: 'Everyone has been notified.')
   else
     event.send_message(content: "There have been #{Defaults.instance.refresh_logs.in_timeset.count} reports of refresh. Need #{Defaults.instance.refresh_logs.user_limit} people to report to refresh.")
   end
