@@ -85,11 +85,11 @@ end
 bot.select_menu do |event|
   interaction = Defaults.instance.noble_interactions.get(event.user.id, event.channel.id)
   unless interaction
-    event.respond(content: "Something went wrong, please try again", ephemeral: true)
+    event.respond(content: 'Something went wrong, please try again', ephemeral: true)
     next
   end
-  trait_name = event.values[0].split('/')[0]
-  p trait_levels = event.values.map { |value| value.split('/')[1].to_i }
+  trait_name = event.custom_id
+  trait_levels = event.values.map { |value| value.split('/')[1].to_i }
   interaction.trait_choice(trait_name, trait_levels)
   event.defer_update
 end
