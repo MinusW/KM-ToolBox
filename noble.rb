@@ -53,4 +53,19 @@ class Noble
   def delete_traits_with_name(trait_name)
     @traits.delete_if { |trait| trait.name == trait_name }
   end
+
+  def total_buffs_as_trait
+    buff_names = @traits.flat_map do |trait|
+      trait.buffs.map(&:name)
+    end.filter { |buff_name| Defaults.instance.multipliers[@role][buff_name] != 0 }.uniq
+    total_trait = Trait.new('Total Buffs', 1, '@type')
+    buff_names.each do |buff_name|
+      sum = 0
+      @traits.each do |trait|
+        sum += trait.buffs.filter { |buff| buff.name == buff_name }.sum(&:value)
+      end
+      total_trait.buffs << Buff.new(buff_name, sum)
+    end
+    total_trait
+  end
 end
