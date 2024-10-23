@@ -65,25 +65,34 @@ bot.application_command(:noble).subcommand(:talent) do |event|
 end
 
 
-event.channel.send_embed do |embed|
-  embed.title = "#{interaction.noble.role.capitalize} at level #{interaction.noble.level}"
-  embed.description = 'Noble breakdown:'
-  embed.color = 0x00ff00
-  buffs_message = []
-  interaction.noble.total_buffs_as_trait.buffs.each do |buff|
-    buffs_message << "#{buff.name}: #{buff.value} / #{buff.score(interaction.noble)}" if buff.value != 0
+bot.button(custom_id: %r{^noble/talent/submit/\d+/\d+$}) do |event|
+  event.defer_update
+  interaction = Defaults.instance.noble_interactions.get(event.user.id, event.channel.id)
+  unless interaction
+    event.call(content: 'Something went wrong, please try again', ephemeral: true)
+    next
   end
-  traits_message = []
-  interaction.noble.traits.each do |trait|
-    traits_message << "#{trait.name} #{trait.level}"
+
+  event.channel.send_embed do |embed|
+    embed.title = "#{interaction.noble.role.capitalize} at level #{interaction.noble.level}"
+    embed.description = 'Noble breakdown:'
+    embed.color = 0x00ff00
+    buffs_message = []
+    interaction.noble.total_buffs_as_trait.buffs.each do |buff|
+      buffs_message << "#{buff.name}: #{buff.value} / #{buff.score(interaction.noble)}" if buff.value != 0
+    end
+    traits_message = []
+    interaction.noble.traits.each do |trait|
+      traits_message << "#{trait.name} #{trait.level}"
+    end
+    embed.add_field(name: 'Traits', value: traits_message.join(' , '), inline: false)
+    embed.add_field(name: 'buffs', value: buffs_message.join(' , '), inline: false)
+    embed.add_field(name: 'Total Score:', value: interaction.noble.score.to_s, inline: true)
+    p embed.add_field(name: 'Potential Traits:', value: interaction.noble.potential_traits.map do |trait|
+      "#{trait.name} #{trait.level}"
+    end.join(', '), inline: true)
+    embed.add_field(name: 'Potential Score:', value: interaction.noble.potential_score.to_s, inline: true)
   end
-  embed.add_field(name: 'Traits', value: traits_message.join(' , '), inline: false)
-  embed.add_field(name: 'buffs', value: buffs_message.join(' , '), inline: false)
-  embed.add_field(name: 'Total Score:', value: interaction.noble.score.to_s, inline: true)
-  p embed.add_field(name: 'Potential Traits:', value: interaction.noble.potential_traits.map do |trait|
-    "#{trait.name} #{trait.level}"
-  end.join(', '), inline: true)
-  embed.add_field(name: 'Potential Score:', value: interaction.noble.potential_score.to_s, inline: true)
 end
 
 bot.button(custom_id: /^noble\/talent\/cancel\/\d+\/\d+$/) do |event|
