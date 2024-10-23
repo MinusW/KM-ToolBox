@@ -26,18 +26,22 @@ bot.application_command(:noble).subcommand(:talent) do |event|
 
   event.defer(ephemeral: true)
   role = event.options['role'].downcase
-  level = event.options['level']
+  level = event.options['level'] || 1
   response_message = "Evaluating talents for role: #{role}, Level: #{level}.\n\n"
-  uniq_traits = Defaults.instance.traits.filter { |trait| trait.type == Defaults.instance.noble_types[role] }.uniq { |trait| trait.name }
+  uniq_traits = Defaults.instance.traits.filter do |trait|
+    trait.type == Defaults.instance.noble_types[role]
+  end.uniq { |trait| trait.name }
   previous_message = nil
   uniq_traits.each_slice(5) do |uniq_trait_slice|
     view = Discordrb::Components::View.new do |builder|
       uniq_trait_slice.each do |uniq_trait|
-        leveled_trait = Defaults.instance.traits.filter {|trait| trait.name == uniq_trait.name && trait.type == Defaults.instance.noble_types[role]}
+        leveled_trait = Defaults.instance.traits.filter do |trait|
+          trait.name == uniq_trait.name && trait.type == Defaults.instance.noble_types[role]
+        end
         builder.row do |r|
           r.string_select(custom_id: uniq_trait.name, placeholder: uniq_trait.name.to_s, min_values: 0, max_values: leveled_trait.count) do |ss|
             leveled_trait.each do |trait|
-              ss.option(label: "Level #{trait.level}", value: "#{trait.name}/#{trait.level}", description: trait.name, emoji: { name: Defaults.instance.emojis[trait.level.to_s]})
+              ss.option(label: "Level #{trait.level}", value: "#{trait.name}/#{trait.level}", description: trait.name, emoji: { name: Defaults.instance.emojis[trait.level.to_s] })
             end
           end
         end
@@ -50,12 +54,10 @@ bot.application_command(:noble).subcommand(:talent) do |event|
     end
   end
 
-
-
-  id = event.send_message(content: "", ephemeral: true) do |_, view|
+  id = event.send_message(content: '', ephemeral: true) do |_, view|
     view.row do |row|
-      row.button(style: :primary, label: :Submit, emoji: 577663465322315786, custom_id: "noble/talent/submit/#{event.user.id}/#{event.channel.id}")
-      row.button(style: :danger, label: :Cancel, emoji: 577663465322315786, custom_id: "noble/talent/cancel/#{event.user.id}/#{event.channel.id}")
+      row.button(style: :primary, label: :Submit, emoji: 577_663_465_322_315_786, custom_id: "noble/talent/submit/#{event.user.id}/#{event.channel.id}")
+      row.button(style: :danger, label: :Cancel, emoji: 577_663_465_322_315_786, custom_id: "noble/talent/cancel/#{event.user.id}/#{event.channel.id}")
     end
   end.id
   Defaults.instance.noble_interactions.remove(event.user.id, event.channel.id)
