@@ -10,9 +10,10 @@ class NobleInteractions
   end
 
   def remove(user_id, channel_id)
-    @interactions.find do |interaction|
-      interaction.user.id == user_id.to_i && interaction.channel.id == channel_id.to_i && interaction.exists?
+    interaction = @interactions.find do |interaction|
+      interaction.user.id == user_id.to_i && interaction.channel.id == channel_id.to_i
     end
+    @interactions.delete(interaction)
   end
 
   def get(user_id, channel_id)
@@ -46,7 +47,7 @@ class NobleInteraction
   end
 
   def submit
-    @interactions.remove(@user.id, @channel.id)
+    Defaults.instance.noble_interactions.remove(@user.id, @channel.id)
   end
 
   attr_accessor :submit_message, :user, :channel, :choices, :noble
