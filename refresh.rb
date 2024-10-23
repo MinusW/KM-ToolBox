@@ -1,6 +1,4 @@
 class Refresh
-  @@timeset = 3600
-  @@user_limit = 5
   class RefreshLog
     attr_reader :user, :channel, :timestamp
 
@@ -11,8 +9,12 @@ class Refresh
     end
   end
 
+  attr_accessor :logs, :user_limit, :timeset
+
   def initialize
     @logs = []
+    @timeset = 3600
+    @user_limit = 5
   end
 
   def add_log(user, channel)
@@ -26,17 +28,16 @@ class Refresh
   end
 
   def refresh?
-    return false if @logs.size < @@user_limit
+    return false if @logs.size < @user_limit
 
-    @logs.last(@@user_limit).all? { |log| log.timestamp > Time.now - @@timeset }
+    @logs.last(@user_limit).all? { |log| log.timestamp > Time.now - @timeset }
   end
 
   def in_timeset
-    @logs.filter { |log| log.timestamp > Time.now - @@timeset }
+    @logs.filter { |log| log.timestamp > Time.now - @timeset }
   end
 
   def count
     in_timeset.size
   end
-  attr_accessor :logs, :user_limit, :timeset
 end
