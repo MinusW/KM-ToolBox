@@ -85,7 +85,6 @@ event.channel.send_embed do |embed|
   end.join(', '), inline: true)
   embed.add_field(name: 'Potential Score:', value: interaction.noble.potential_score.to_s, inline: true)
 end
-end
 
 bot.button(custom_id: /^noble\/talent\/cancel\/\d+\/\d+$/) do |event|
   event.defer(ephemeral: true)
