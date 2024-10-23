@@ -79,7 +79,7 @@ bot.button(custom_id: /^noble\/talent\/cancel\/\d+\/\d+$/) do |event|
   event.defer(ephemeral: true)
 
   Defaults.instance.noble_interactions.remove(event.user.id, event.channel.id)
-  event.respond(content: "Choices cancelled!", ephemeral: true)
+  event.send_message(content: "Choices cancelled!")
 end
 
 bot.select_menu do |event|
