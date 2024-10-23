@@ -9,9 +9,8 @@ class Building
   def get_prices_in_level_range(start_level, end_level)
     totals = Hash.new { |hash, key| hash[key] = { "common" => 0, "uncommon" => 0 } }
     totals["stone"] = { "total" => 0 }
-  
-    (start_level+1..end_level).each do |level|
 
+    (start_level+1..end_level).each do |level|
       next unless levels[level]
       metal_type = levels[level].metal_type
       if levels[level].count.to_i > 1
@@ -26,10 +25,9 @@ class Building
       end
       totals["stone"]["total"] += levels[level].stone.to_i*count
     end
-  
     totals
   end
-  
+
   def self.get_buildings_prices_in_level_range(buildings, start_level, end_level)
     totals = Hash.new { |hash, key| hash[key] = { "common" => 0, "uncommon" => 0 } }
     totals["stone"] = { "total" => 0 }
