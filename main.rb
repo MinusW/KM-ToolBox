@@ -326,4 +326,28 @@ bot.application_command(:contribute) do |event|
   event.respond(content: "Contribute to the bot's development at #{ENV['REPOSITORY_URL']}", ephemeral: false)
 end
 
+bot.application_command(:trait) do |event|
+  event.defer(ephemeral: false)
+  name = event.options['trait']
+  traits = Defaults.instance.traits.filter { |trait| trait.name.downcase == name.downcase }
+  if traits.empty?
+    event.send_message(content: "Trait #{name} not found", ephemeral: true)
+    next
+  end
+  event.edit_response do |builder|
+    builder.add_embed do |embed|
+      embed.title = "#{name.capitalize}"
+      embed.description = 'Trait breakdown:'
+      embed.color = 0x00ff00
+      traits.each do |trait|
+        buffs = []
+        trait.buffs.each do |buff|
+          buffs << "#{buff.name}: #{buff.value}"
+        end
+        embed.add_field(name: "#{trait.name} #{trait.level}", value: buffs.join(' , '), inline: false)
+      end
+    end
+  end
+end
+
 bot.run
