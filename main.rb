@@ -236,27 +236,38 @@ bot.application_command(:buildcost) do |event|
   start_level = (event.options['start_level'] || 0).to_i
   end_level = (event.options['end_level'] || 40).to_i
 
-    building = Defaults.instance.buildings[building_name]
-    if building
-      prices = building.get_prices_in_level_range(start_level.to_i, end_level.to_i)
-      parsed_prices = prices.map do |material, details|
-        if material == "stone"
-          details_str = details["total"].to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1\'').reverse
-          "#{material.capitalize}: #{details_str}"
-        else
-          details_str = details.map { |rarity, amount| "#{rarity.capitalize}: #{amount.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1\'').reverse}" }.join(", ")
-          "#{material.capitalize}: #{details_str}"
+  building = Defaults.instance.buildings[building_name]
+  if building
+    prices = building.get_prices_in_level_range(start_level.to_i, end_level.to_i)
+    p prices
+    stone = 0
+    rss = []
+    prices.each do |material, details|
+      if material == 'stone'
+        stone = details['total'].to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1\'').reverse
+      else
+        details.each do |rarity, amount|
+          rss << [material, rarity.capitalize, amount.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1\'').reverse]
         end
-      end.join("\n")
-
-      event.send_message(content: "Prices for #{building_name} from level #{start_level} to level #{end_level} are:\n#{parsed_prices}", ephemeral: false)
-    else
-      event.send_message(content: "Building not found.")
+      end
     end
+
+    event.edit_response do |builder|
+      builder.add_embed do |embed|
+        embed.title = building_name.capitalize
+        embed.description = "Cost from level #{start_level} to level #{end_level} is:"
+        embed.color = 0x00ff00
+        embed.add_field(name: 'Stone', value: stone, inline: false)
+        rss.each do |material, rarity, amount|
+          embed.add_field(name: "#{rarity} #{material.capitalize}", value: amount, inline: false)
+        end
+      end
+    end
+  else
+    event.send_message(content: 'Building not found.')
+  end
   nil
 end
-
-
 
 bot.application_command(:serverrefresh) do |event|
   event.defer(ephemeral: true)
