@@ -88,7 +88,7 @@ bot.button(custom_id: %r{^noble/talent/submit/\d+/\d+$}) do |event|
     embed.add_field(name: 'Traits', value: traits_message.join(' , '), inline: false)
     embed.add_field(name: 'buffs', value: buffs_message.join(' , '), inline: false)
     embed.add_field(name: 'Total Score:', value: interaction.noble.score.to_s, inline: true)
-    p embed.add_field(name: 'Potential Traits:', value: interaction.noble.potential_traits.map do |trait|
+    embed.add_field(name: 'Potential Traits:', value: interaction.noble.potential_traits.map do |trait|
       "#{trait.name} #{trait.level}"
     end.join(', '), inline: true)
     embed.add_field(name: 'Potential Score:', value: interaction.noble.potential_score.to_s, inline: true)
