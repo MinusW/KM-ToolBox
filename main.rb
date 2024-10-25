@@ -252,38 +252,38 @@ end
 bot.application_command(:buildcost) do |event|
   event.defer(ephemeral: false)
 
-  building_name = event.options['building']
+  building_name = event.options['building'].downcase
   start_level = (event.options['start_level'] || 0).to_i
   end_level = (event.options['end_level'] || 40).to_i
 
   building = Defaults.instance.buildings[building_name]
-  if building
-    prices = building.get_prices_in_level_range(start_level.to_i, end_level.to_i)
-    stone = 0
-    rss = []
-    prices.each do |material, details|
-      if material == 'stone'
-        stone = details['total'].to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1\'').reverse
-      else
-        details.each do |rarity, amount|
-          rss << [material, rarity.capitalize, amount.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1\'').reverse]
-        end
-      end
-    end
+  event.send_message(content: 'Building not found.') unless building || building_name == 'all'
 
-    event.edit_response do |builder|
-      builder.add_embed do |embed|
-        embed.title = building_name.capitalize
-        embed.description = "Cost from level #{start_level} to level #{end_level} is:"
-        embed.color = 0x00ff00
-        embed.add_field(name: 'Stone', value: stone, inline: false)
-        rss.each do |material, rarity, amount|
-          embed.add_field(name: "#{rarity} #{material.capitalize}", value: amount, inline: false)
-        end
+  prices = building.get_prices_in_level_range(start_level.to_i, end_level.to_i) if building
+  prices = Building.get_all_building_prices_together(start_level.to_i, end_level.to_i) if building_name == 'all'
+
+  stone = 0
+  rss = []
+  prices.each do |material, details|
+    if material == 'stone'
+      stone = details['total'].to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1\'').reverse
+    else
+      details.each do |rarity, amount|
+        rss << [material, rarity.capitalize, amount.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1\'').reverse]
       end
     end
-  else
-    event.send_message(content: 'Building not found.')
+  end
+
+  event.edit_response do |builder|
+    builder.add_embed do |embed|
+      embed.title = building_name.capitalize
+      embed.description = "Cost from level #{start_level} to level #{end_level} is:"
+      embed.color = 0x00ff00
+      embed.add_field(name: 'Stone', value: stone, inline: false)
+      rss.each do |material, rarity, amount|
+        embed.add_field(name: "#{rarity} #{material.capitalize}", value: amount, inline: false)
+      end
+    end
   end
   nil
 end
