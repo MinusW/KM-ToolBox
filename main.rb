@@ -259,7 +259,6 @@ bot.application_command(:buildcost) do |event|
   building = Defaults.instance.buildings[building_name]
   if building
     prices = building.get_prices_in_level_range(start_level.to_i, end_level.to_i)
-    p prices
     stone = 0
     rss = []
     prices.each do |material, details|
