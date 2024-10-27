@@ -108,12 +108,11 @@ class Defaults
   end
 
   def set_emojis
-    {
-      '1' => '1️⃣',
-      '2' => '2️⃣',
-      '3' => '3️⃣',
-      '4' => '4️⃣'
-    }
+    emojis = {}
+    CSV.foreach('data/emojis.csv', headers: true, col_sep: ';') do |row|
+      emojis[row['name']] = row['id']
+    end
+    emojis
   end
 
   attr_reader :multipliers, :traits, :stages, :traits_on_tier, :levels_per_stage, :buildings, :noble_types, :interactions, :emojis, :refresh_logs, :noble_interactions

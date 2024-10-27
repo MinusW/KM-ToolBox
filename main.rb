@@ -27,6 +27,7 @@ bot.application_command(:noble).subcommand(:talent) do |event|
   event.defer(ephemeral: true)
   role = event.options['role'].downcase
   level = event.options['level'] || 1
+  temporary_noble = Noble.new(role, level)
   response_message = "Evaluating talents for role: #{role}, Level: #{level}.\n\n"
   uniq_traits = Defaults.instance.traits.filter do |trait|
     trait.type == Defaults.instance.noble_types[role]
@@ -41,7 +42,7 @@ bot.application_command(:noble).subcommand(:talent) do |event|
         builder.row do |r|
           r.string_select(custom_id: uniq_trait.name, placeholder: uniq_trait.name.to_s, min_values: 0, max_values: leveled_trait.count) do |ss|
             leveled_trait.each do |trait|
-              ss.option(label: "Level #{trait.level}", value: "#{trait.name}/#{trait.level}", description: trait.name, emoji: { name: Defaults.instance.emojis[trait.level.to_s] })
+              ss.option(label: "#{trait.name} #{trait.level}", value: "#{trait.name}/#{trait.level}", description: "Score: #{trait.score(temporary_noble)}", emoji: Defaults.instance.emojis["TRAITS_#{trait.name.upcase}_#{trait.level}".gsub(/[()-]/, '').gsub(' ', '_')].to_i)
             end
           end
         end
@@ -356,5 +357,16 @@ bot.application_command(:trait) do |event|
     end
   end
 end
+
+
+def find_missing_emojis
+  Defaults.instance.traits.each do |trait|
+    name = "TRAITS_#{trait.name.upcase}_#{trait.level}"
+    emoji = Defaults.instance.emojis[name.gsub(/[()-]/, '').gsub(' ', '_')]
+    puts "#{trait.name} #{trait.level} TRAITS_#{trait.name.upcase}_#{trait.level}" if emoji.nil?
+  end
+end
+
+find_missing_emojis
 
 bot.run
