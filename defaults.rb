@@ -75,12 +75,11 @@ class Defaults
   end
 
   def set_building(csv_file)
-    levels = {}
+    levels = []
     building_name = File.basename(csv_file, '.csv')
 
     CSV.foreach(csv_file, headers: true, col_sep: ';').with_index(1) do |row, index|
-      levels[index] =
-        BuildingLevel.new(row['keepLevel'], row['common'], row['uncommon'], row['metalType'], row['stone'], row['count'])
+      levels << BuildingLevel.new(row['keepLevel'].to_i, row['common'].to_i, row['uncommon'].to_i, row['metalType'], row['stone'].to_i, row['count'].to_i)
     end
 
     Building.new(building_name, levels)
