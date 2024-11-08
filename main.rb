@@ -80,14 +80,28 @@ bot.button(custom_id: %r{^noble/talent/submit/\d+/\d+$}) do |event|
     embed.color = 0x00ff00
     buffs_message = []
     interaction.noble.total_buffs_as_trait.buffs.each do |buff|
-      buffs_message << "#{buff.name}: #{buff.value} / #{buff.score(interaction.noble)}" if buff.value != 0
+      buffs_message << "#{buff.name}: #{buff.value} / #{buff.score(interaction.noble).to_s.gsub('.0', '')}" if buff.value != 0
     end
     traits_message = []
+    first = 0
     interaction.noble.traits.each do |trait|
-      traits_message << "#{trait.name} #{trait.level}"
+      id = Defaults.instance.emojis["TRAITS_#{trait.name.upcase}_#{trait.level}".gsub(/[()-]/, '').gsub(' ', '_')].to_s
+      name = "TRAITS_#{trait.name.upcase}_#{trait.level}".gsub(/[()-]/, '').gsub(' ', '_')
+      emoji = "<:#{name}:#{id}>"
+      traits_message << emoji
+      if traits_message.count == 20
+        if first == 1
+          embed.add_field(name: '', value: traits_message.join(''), inline: false)
+        else
+          embed.add_field(name: 'Traits', value: traits_message.join(''), inline: false)
+        end
+
+        first = 1
+        traits_message.clear
+      end
     end
-    embed.add_field(name: 'Traits', value: traits_message.join(' , '), inline: false)
-    embed.add_field(name: 'buffs', value: buffs_message.join(' , '), inline: false)
+    embed.add_field(name: '', value: traits_message.join(''), inline: false) unless traits_message.empty?
+    embed.add_field(name: 'buffs', value: buffs_message.join(', '), inline: false)
     embed.add_field(name: 'Total Score:', value: interaction.noble.score.to_s, inline: true)
     embed.add_field(name: 'Potential Traits:', value: interaction.noble.potential_traits.map do |trait|
       "#{trait.name} #{trait.level}"
