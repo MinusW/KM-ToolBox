@@ -11,10 +11,7 @@ class Building
     totals['stone'] = { 'total' => 0 }
 
     (start_level + 1..end_level).each do |keep_level|
-      # p keep_level
-      p @levels
-      @levels.filter { |level| p level.keep_level == keep_level }.each do |level|
-        p level
+      @levels.filter { |level| level.keep_level == keep_level }.each do |level|
         metal_type = level.metal_type
         if metal_type
           totals[metal_type]['common'] += level.common.to_i * level.count
