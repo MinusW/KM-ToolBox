@@ -7,6 +7,10 @@ class BuildingLevel
     @uncommon = uncommon
     @metal_type = metal_type
     @stone = stone
-    @count = count
+    if count == 0 || count == nil
+      @count = 1
+    else
+      @count = count.to_i
+    end
   end
 end
