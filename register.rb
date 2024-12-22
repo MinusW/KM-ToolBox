@@ -32,12 +32,6 @@ bot.register_application_command(:noble, 'Manage noble actions') do |cmd|
     option.string('role', 'Specify the noble\'s role', choices: { captain: 'Captain', knight: 'Knight', subjugator: 'Subjugator', explorer: 'Explorer', merchant: 'Merchant', collier: 'Collier'}, required: true)
     option.integer('level', 'Specify the level (defaults to 1 if not provided)', required: false)
   end
-
-  cmd.subcommand('cost', 'Calculate cost to upgrade noble') do |option|
-    option.string('role', 'Specify the noble\'s role', choices: { captain: 'Captain', knight: 'Knight', subjugator: 'Subjugator', explorer: 'Explorer', merchant: 'Merchant', collier: 'Collier'}, required: true)
-    option.integer('start_level', 'Specify the starting level (defaults to 1)', required: false)
-    option.integer('end_level', 'Specify the ending level (defaults to 120/80)', required: false)
-  end
 end
 sleep(1)
 bot.register_application_command(:serverrefresh, 'Report the refinery refresh')
