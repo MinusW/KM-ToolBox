@@ -129,28 +129,6 @@ bot.select_menu do |event|
   event.defer_update
 end
 
-bot.member_join do |event|
-  channel = event.server.create_channel("#{event.user.name}", 0)
-
-  user_perm = Discordrb::Overwrite.new(event.user, type: :member, allow: 1024, deny: 0)
-  everyone_perm = Discordrb::Overwrite.new(event.server.everyone_role, type: :role, allow: 0, deny: 1024)
-  channel.define_overwrite(user_perm)
-  channel.define_overwrite(everyone_perm)
-  channel.parent = ENV['PRIVATE_CATEGORY_ID'].to_i
-
-  bot.send_message(channel.id, "Welcome to the server, #{event.user.mention}!\nPlease read the rules in the #rules channel and enjoy your stay!")
-end
-
-bot.member_leave do |event|
-  channel = event.server.text_channels.find { |ch| ch.name == event.user.name && ch.parent == ENV['PRIVATE_CATEGORY_ID'].to_i}
-  channel.delete
-
-  event.server.text_channels.find { |ch| ch.parent == ENV['PRIVATE_CATEGORY_ID'].to_i && ch.users.empty?}.each do |ch|
-    ch.delete
-  end
-end
-
-
 bot.application_command(:group).subcommand(:create) do |event|
   allowed_channels = [ENV['PRIVATE_CATEGORY_ID'].to_i]
   allowed_roles = []
