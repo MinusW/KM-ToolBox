@@ -16,7 +16,7 @@ loader.setup
 bot = Discordrb::Bot.new(token: ENV['DISCORD_TOKEN'])
 
 bot.application_command(:noble).subcommand(:talent) do |event|
-  allowed_channels = [ENV['PRIVATE_CATEGORY_ID'].to_i, ENV['GROUP_CATEGORY_ID'].to_i]
+  allowed_channels = [ENV['GLOBAL_CHANNEL_ID'].to_i, ENV['GROUP_CATEGORY_ID'].to_i]
   allowed_roles = []
   perms = InclusivePermissions.new(channel_ids: allowed_channels, role_ids: allowed_roles)
   unless perms.check_channel_permissions(event)
@@ -130,7 +130,7 @@ bot.select_menu do |event|
 end
 
 bot.application_command(:group).subcommand(:create) do |event|
-  allowed_channels = [ENV['PRIVATE_CATEGORY_ID'].to_i]
+  allowed_channels = [ENV['GLOBAL_CHANNEL_ID'].to_i]
   allowed_roles = []
   perms = InclusivePermissions.new(channel_ids: allowed_channels, role_ids: allowed_roles)
   unless perms.check_channel_permissions(event)
@@ -295,7 +295,7 @@ bot.application_command(:serverrefresh) do |event|
 end
 
 bot.application_command(:clear) do |event|
-  allowed_channels = [ENV['PRIVATE_CATEGORY_ID'].to_i, ENV['GROUP_CATEGORY_ID'].to_i]
+  allowed_channels = [ENV['GLOBAL_CHANNEL_ID'].to_i, ENV['GROUP_CATEGORY_ID'].to_i]
   allowed_roles = []
   perms = InclusivePermissions.new(channel_ids: allowed_channels, role_ids: allowed_roles)
   unless perms.check_channel_permissions(event)
