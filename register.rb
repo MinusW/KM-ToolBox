@@ -71,7 +71,8 @@ bot.register_application_command(:buildcost, 'Calculate the cost to upgrade a bu
     siege_factory: "siege factory",
     stables: "stables",
     stonemason: "stonemason",
-    watchtower: "watchtower"
+    watchtower: "watchtower",
+    all: "all"
   }, required: true)
   cmd.integer('start_level', 'Specify the starting level (defaults to 1)', required: false)
   cmd.integer('end_level', 'Specify the ending level (defaults to 40)', required: false)
