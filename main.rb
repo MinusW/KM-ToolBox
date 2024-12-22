@@ -350,15 +350,4 @@ bot.application_command(:trait) do |event|
   end
 end
 
-
-def find_missing_emojis
-  Defaults.instance.traits.each do |trait|
-    name = "TRAITS_#{trait.name.upcase}_#{trait.level}"
-    emoji = Defaults.instance.emojis[name.gsub(/[()-]/, '').gsub(' ', '_')]
-    puts "#{trait.name} #{trait.level} TRAITS_#{trait.name.upcase}_#{trait.level}" if emoji.nil?
-  end
-end
-
-find_missing_emojis
-
 bot.run
