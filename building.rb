@@ -10,7 +10,7 @@ class Building
     totals = Hash.new { |hash, key| hash[key] = { 'common' => 0, 'uncommon' => 0 } }
     totals['stone'] = { 'total' => 0 }
 
-    (start_level + 1..end_level).each do |keep_level|
+    (start_level + 1..end_level - 1).each do |keep_level|
       @levels.filter { |level| level.keep_level == keep_level }.each do |level|
         metal_type = level.metal_type
         if metal_type
