@@ -41,7 +41,7 @@ bot.register_application_command(:noble, 'Manage noble actions') do |cmd|
 end
 sleep(1)
 bot.register_application_command(:serverrefresh, 'Report the refinery refresh')
-
+sleep(1)
 bot.register_application_command(:clear, "delete last N lines") do |cmd|
   cmd.string('amount', 'How many messages do you want to clear? (defaults to all)', required: false)
 end
@@ -55,23 +55,26 @@ bot.register_application_command(:trait, "Trait stats") do |option|
   option.string('trait', 'Specify the trait you want to check', required: true)
 end
 sleep(1)
-bot.register_application_command(:totd, "Submit a tip of the day" ) do |option|
-  option.string('tip', 'A tip you want to share with everyone', required: true)
-end
-sleep(1)
-bot.register_application_command(:report, 'Report a bug, issue or propose a new functionality') do |option|
-  option.string('title', 'Your tip title', required: true)
-  option.string('description', 'Your tip', required: false)
-end
-sleep(1)
 bot.register_application_command(:buildcost, 'Calculate the cost to upgrade a building') do |cmd|
-  cmd.string('building', 'Specify the building you want to upgrade', required: true)
+  cmd.string('building', 'Specify the building you want to upgrade', choices: {
+    academy: "academy",
+    archery: "archery",
+    barracks: "barracks",
+    blacksmith: "blacksmith",
+    dragon_lair: "dragon lair",
+    farm: "farm",
+    hall_of_titans: "hall of titans",
+    housing: "housing",
+    keep: "keep",
+    platform: "platform",
+    sawmill: "sawmill",
+    siege_factory: "siege factory",
+    stables: "stables",
+    stonemason: "stonemason",
+    watchtower: "watchtower"
+  }, required: true)
   cmd.integer('start_level', 'Specify the starting level (defaults to 1)', required: false)
   cmd.integer('end_level', 'Specify the ending level (defaults to 40)', required: false)
-end
-sleep(1)
-bot.register_application_command(:help, "help with commands") do |cmd|
-  cmd.string('command', 'The command you want help with', required: false)
 end
 sleep(1)
 bot.register_application_command(:contribute, "Contribute to the bot's development")
