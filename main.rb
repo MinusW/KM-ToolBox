@@ -350,4 +350,16 @@ bot.application_command(:trait) do |event|
   end
 end
 
+require 'webrick'
+
+Thread.new do
+  server = WEBrick::HTTPServer.new(
+    Port: ENV.fetch('PORT', 10_000).to_i,
+    Logger: WEBrick::Log.new(File::NULL),
+    AccessLog: []
+  )
+  server.mount_proc('/') { |_req, res| res.body = 'ok' }
+  server.start
+end
+
 bot.run
