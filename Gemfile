@@ -11,3 +11,5 @@ gem "csv", "~> 3.3"
 gem "zeitwerk", "~> 2.8"
 
 gem "dotenv", "~> 3.2"
+
+gem "erb", "~> 6.0"
