@@ -1,0 +1,23 @@
+{
+	"name": "km-toolbox-v2",
+	"module": "index.ts",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"start": "bun run index.ts",
+		"dev": "bun --watch index.ts",
+		"register": "bun run src/register.ts",
+		"typecheck": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"@types/papaparse": "^5.5.2"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"discord.js": "^14.27.0",
+		"papaparse": "^5.7.0"
+	}
+}
