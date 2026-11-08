@@ -60,9 +60,14 @@ export async function execute(interaction: Parameters<Command["execute"]>[0]) {
 	// Exact numbers when verbose, short ones (2.30m) otherwise
 	const show = (n: number) => codeBlock(verbose ? thousands(n) : compact(n));
 
+	const range =
+		start === 0
+			? `to reach level ${end}`
+			: `to go from level ${start} to ${end}`;
+
 	const lines = [
 		`# ${name === "all" ? "All Buildings" : capitalize(name)}`,
-		`## Cost from level ${start} to level ${end}:`,
+		`## Resources needed ${range}`,
 	];
 
 	const embed = new EmbedBuilder()
