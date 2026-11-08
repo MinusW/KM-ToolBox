@@ -21,6 +21,7 @@ bun-debug.log*
 .cache/
 .eslintcache
 .npm/
+.commands-hash
 
 # Coverage
 coverage/

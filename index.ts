@@ -1,8 +1,10 @@
 import { Client, Events, GatewayIntentBits, MessageFlags } from "discord.js";
 import { commands } from "@/commands";
 import { loadData } from "@/defaults";
+import { registerCommands } from "@/register";
 
 await loadData();
+await registerCommands().catch((err) => console.error("Command registration failed:", err));
 
 const byName = new Map(commands.map((c) => [c.data.name, c]));
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
