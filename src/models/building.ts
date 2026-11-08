@@ -7,6 +7,7 @@ export type Prices = {
 	stone: number;
 	metals: Record<string, MetalTotals>;
 };
+export type CountRange = { min: number; max: number };
 
 // Mirrors Ruby's to_i: blank or invalid becomes 0
 const toInt = (value: string | undefined): number =>
@@ -49,6 +50,17 @@ export class Building {
 		}));
 
 		return new Building(basename(path, ".csv"), levels);
+	}
+
+	levelsInRange(startLevel: number, endLevel: number): BuildingLevel[] {
+		return this.levels.filter((l) => l.keepLevel > startLevel && l.keepLevel <= endLevel);
+	}
+
+	// Smallest and largest count among the levels in range, or null when no level falls in it
+	countRange(startLevel: number, endLevel: number): CountRange | null {
+		const counts = this.levelsInRange(startLevel, endLevel).map((l) => l.count);
+		if (counts.length === 0) return null;
+		return { min: Math.min(...counts), max: Math.max(...counts) };
 	}
 
 	getPricesInLevelRange(startLevel: number, endLevel: number): Prices {
