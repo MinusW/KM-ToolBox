@@ -17,10 +17,10 @@ export const data = new SlashCommandBuilder()
 		o.setName("end_level").setDescription("Target level (Default 40)").setMinValue(1),
 	)
 	.addBooleanOption((o) =>
-		o.setName("verbose").setDescription("Show exact values instead of short ones (Default false)"),
+		o.setName("verbose").setDescription("Show exact values instead of short ones (Default True)"),
 	)
 	.addBooleanOption((o) => 
-		o.setName("breakdown").setDescription("Show each building’s cost separately (Default false & Only works with ‘all’)"),
+		o.setName("breakdown").setDescription("Show each building’s cost separately (Default True & Only works with ‘all’)"),
 	);
 
 export async function autocomplete(interaction: Parameters<NonNullable<Command["autocomplete"]>>[0]) {
@@ -80,7 +80,7 @@ export async function execute(interaction: Parameters<Command["execute"]>[0]) {
 	const name = interaction.options.getString("building", true).toLowerCase();
 	const start = interaction.options.getInteger("start_level") ?? 0;
 	const end = interaction.options.getInteger("end_level") ?? 40;
-	const verbose = interaction.options.getBoolean("verbose") ?? false;
+	const verbose = interaction.options.getBoolean("verbose") ?? true;
 	// Silently ignored for a single building
 	const breakdown = name === "all" && (interaction.options.getBoolean("breakdown") ?? false);
 
@@ -125,6 +125,7 @@ export async function execute(interaction: Parameters<Command["execute"]>[0]) {
 	// Exact numbers when verbose, short ones (2.30m) otherwise
 	const fmt = (n: number) => (verbose ? thousands(n) : compact(n));
 	const show = (n: number) => codeBlock(fmt(n));
+	const note = "Total Stone will vary based on your current research progress.";
 
 	const range =
 		start === 0
@@ -137,7 +138,6 @@ export async function execute(interaction: Parameters<Command["execute"]>[0]) {
 	];
 
 	const totals = new EmbedBuilder().setColor(color.primary);
-	if (count) totals.addFields({ name: "Count", value: codeBlock(count) });
 	totals.addFields(
 		{ name: "Stone", value: show(prices.stone) },
 		...Object.entries(prices.metals).flatMap(([metal, { common, uncommon }]) => [
@@ -145,6 +145,8 @@ export async function execute(interaction: Parameters<Command["execute"]>[0]) {
 			{ name: `Uncommon ${capitalize(metal)}`, value: show(uncommon) },
 		]),
 	);
+	if (count) totals.addFields({ name: "Count", value: codeBlock(count) });
+	totals.setFooter({text: note});
 
 	const embeds = [totals];
 	let breakdownShown = false;
@@ -165,7 +167,6 @@ export async function execute(interaction: Parameters<Command["execute"]>[0]) {
 		}
 	}
 
-	const note = "Total Stone will vary based on your current research progress.";
 	embeds.at(-1)?.setFooter({
 		text: breakdownShown ? `Metals: common / uncommon.\n${note}` : note,
 	});
