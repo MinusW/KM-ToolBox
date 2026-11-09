@@ -63,21 +63,17 @@ export class Building {
 		return { min: Math.min(...counts), max: Math.max(...counts) };
 	}
 
-	getPricesInLevelRange(startLevel: number, endLevel: number): Prices {
+	getPricesInLevelRange(startLevel: number, endLevel: number, perUnit = false): Prices {
 		const totals = emptyPrices();
 
-		for (const level of this.levels) {
-			if (level.keepLevel <= startLevel || level.keepLevel > endLevel) continue;
+		for (const level of this.levelsInRange(startLevel, endLevel)) {
+			// perUnit ignores the building count, giving the cost of a single unit
+			const times = perUnit ? 1 : level.count;
 
 			if (level.metalType) {
-				addMetal(
-					totals,
-					level.metalType,
-					level.common * level.count,
-					level.uncommon * level.count,
-				);
+				addMetal(totals, level.metalType, level.common * times, level.uncommon * times);
 			}
-			totals.stone += level.stone * level.count;
+			totals.stone += level.stone * times;
 		}
 
 		return totals;
