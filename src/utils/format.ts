@@ -6,6 +6,7 @@ const UNITS = [
 
 export const color = {
 	primary: "#F7931E",
+	note: "#4E5058",
 } as const;
 
 export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
